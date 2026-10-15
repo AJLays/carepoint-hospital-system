@@ -1,0 +1,342 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarePoint | Hospital Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <!-- Page Loading Bar -->
+    <div id="pageLoader" class="page-loader" aria-hidden="true">
+        <div class="page-loader-bar"></div>
+    </div>
+
+    <div class="app-layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">+</div>
+                <div class="brand-text">
+                    <h2>CarePoint</h2>
+                    <p>Hospital Management</p>
+                </div>
+            </div>
+
+            <div class="sidebar-label">MAIN MENU</div>
+
+            <nav class="navigation">
+                <a href="#dashboard" class="nav-link">
+                    <span class="nav-icon">▦</span>
+                    Dashboard
+                </a>
+                <a href="#patient-records" class="nav-link active">
+                    <span class="nav-icon">♙</span>
+                    Patient Records
+                </a>
+                <a href="#registration" class="nav-link">
+                    <span class="nav-icon">＋</span>
+                    Register Patient
+                </a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="support-card">
+                    <div class="support-icon">✚</div>
+                    <h3>Patient Care</h3>
+                    <p>Keep patient information organized and accessible.</p>
+                </div>
+
+                <div class="sidebar-footer">
+                    <span class="status-dot"></span>
+                    Hospital System
+                    <span class="version">v1.0</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- Header -->
+            <header class="topbar" id="dashboard">
+                <div>
+                    <p class="breadcrumb">Home / <span>Patient Management</span></p>
+                    <h1>Patient Management</h1>
+                </div>
+
+                <div class="topbar-right">
+                    <div class="system-status">
+                        <span class="status-dot"></span>
+                        Management Portal
+                    </div>
+
+                    <div class="profile">
+                        <div class="avatar">A</div>
+                        <div class="profile-info">
+                            <strong>Administrator</strong>
+                            <span>Hospital Staff</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Welcome Banner -->
+            <section class="welcome-section">
+                <div>
+                    <p class="eyebrow">PATIENT SERVICES</p>
+                    <h2>Patient Records &amp; Registration</h2>
+                    <p class="welcome-description">
+                        Manage patient information, register new patients, and
+                        keep records organized in one place.
+                    </p>
+                </div>
+
+                <div class="welcome-symbol" aria-hidden="true">✚</div>
+            </section>
+
+            <!-- Summary Cards -->
+            <section class="summary-grid">
+                <article class="summary-card">
+                    <div class="summary-icon blue">♙</div>
+                    <div>
+                        <p>Total Patients</p>
+                        <h3 id="count">0</h3>
+                        <span>Registered records</span>
+                    </div>
+                </article>
+
+                <article class="summary-card">
+                    <div class="summary-icon green">✓</div>
+                    <div>
+                        <p>System Status</p>
+                        <h3 class="status-heading">Ready</h3>
+                        <span>Patient management</span>
+                    </div>
+                </article>
+
+                <article class="summary-card">
+                    <div class="summary-icon purple">▤</div>
+                    <div>
+                        <p>Record Management</p>
+                        <h3 class="status-heading">Centralized</h3>
+                        <span>Patient information</span>
+                    </div>
+                </article>
+            </section>
+
+            <!-- Patient Registration Form -->
+            <section class="panel" id="registration">
+                <div class="panel-heading">
+                    <div class="heading-left">
+                        <div class="heading-icon">＋</div>
+                        <div>
+                            <h2 id="formTitle">Register New Patient</h2>
+                            <p>Enter the patient's information below.</p>
+                        </div>
+                    </div>
+
+                    <span class="required-note">* Required fields</span>
+                </div>
+
+                <div class="panel-body">
+                    <form id="patientForm">
+                        <div class="form-section-title">
+                            <span>01</span>
+                            Personal Information
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="first_name">
+                                    First Name <span>*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="first_name"
+                                    name="first_name"
+                                    placeholder="Enter first name"
+                                    autocomplete="given-name"
+                                    maxlength="50"
+                                    required
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="last_name">
+                                    Last Name <span>*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="last_name"
+                                    name="last_name"
+                                    placeholder="Enter last name"
+                                    autocomplete="family-name"
+                                    maxlength="50"
+                                    required
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="birthdate">
+                                    Date of Birth <span>*</span>
+                                </label>
+                                <input
+                                    type="date"
+                                    id="birthdate"
+                                    name="birthdate"
+                                    autocomplete="bday"
+                                    required
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="sex">Sex <span>*</span></label>
+                                <select id="sex" name="sex" required>
+                                    <option value="">Select sex</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-section-title second-section">
+                            <span>02</span>
+                            Contact Information
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="contact_no">Contact Number</label>
+                                <input
+                                    type="tel"
+                                    id="contact_no"
+                                    name="contact_no"
+                                    placeholder="Enter contact number"
+                                    autocomplete="tel"
+                                    maxlength="20"
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="address">Address</label>
+                                <input
+                                    type="text"
+                                    id="address"
+                                    name="address"
+                                    placeholder="Enter complete address"
+                                    autocomplete="street-address"
+                                    maxlength="255"
+                                >
+                            </div>
+                        </div>
+
+                        <div
+                            id="message"
+                            class="message"
+                            role="status"
+                            aria-live="polite"
+                        ></div>
+
+                        <div class="form-actions">
+                            <button
+                                type="button"
+                                id="cancelButton"
+                                class="btn btn-secondary"
+                            >
+                                Cancel
+                            </button>
+
+                            <button
+                                type="submit"
+                                id="saveButton"
+                                class="btn btn-primary"
+                            >
+                                <span aria-hidden="true">＋</span>
+                                Save Patient
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Patient Records Table -->
+            <section class="panel records-panel" id="patient-records">
+                <div class="panel-heading records-heading">
+                    <div class="heading-left">
+                        <div class="heading-icon records-icon">▤</div>
+                        <div>
+                            <h2>Patient Records</h2>
+                            <p>View and manage registered patients.</p>
+                        </div>
+                    </div>
+
+                    <span class="records-label">PATIENT DATABASE</span>
+                </div>
+
+                <!-- Search and Filter -->
+                <div class="records-toolbar">
+                    <div class="search-box">
+                        <span aria-hidden="true">⌕</span>
+                        <input
+                            type="search"
+                            id="search"
+                            placeholder="Search by patient name..."
+                            aria-label="Search patients"
+                        >
+                    </div>
+
+                    <div class="filter-box">
+                        <label for="statusFilter">Status:</label>
+                        <select id="statusFilter">
+                            <option value="">All Statuses</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Patient ID</th>
+                                <th>Patient Name</th>
+                                <th>Date of Birth</th>
+                                <th>Sex</th>
+                                <th>Contact Number</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="patientList">
+                            <tr>
+                                <td colspan="7" class="empty-state">
+                                    Loading patient records...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-footer">
+                    <span>Patient records are displayed below.</span>
+                    <span class="secure-label">✚ CarePoint Management</span>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="page-footer">
+                <span>© 2026 CarePoint Hospital Management System</span>
+                <span>Patient information management portal</span>
+            </footer>
+
+        </main>
+    </div>
+</body>
+</html>
+```
