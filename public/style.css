@@ -997,3 +997,22 @@ tbody tr:last-child td {
         width: 100%;
     }
 }
+/* COURSE MANAGEMENT */
+
+#courses .table-container {
+    border-top: 1px solid var(--border);
+}
+
+#courses .form-actions {
+    margin-top: 20px;
+}
+
+#courses .action-btn[data-action="delete-course"] {
+    border-color: #f5d3d6;
+    background: #fff3f4;
+    color: #d6404e;
+}
+
+#courses .action-btn[data-action="delete-course"]:hover {
+    background: #ffe3e6;
+}
