@@ -603,7 +603,7 @@ async function courseExists(id) {
 // COURSES - GET: LIST ALL COURSES
 // (also used to fill the Course dropdown)
 // ========================================
-app.get('/api/course', async (req, res) => {
+app.get('/api/courses', async (req, res) => {
     try {
         const [rows] = await db.execute(
             `SELECT
@@ -634,7 +634,7 @@ app.get('/api/course', async (req, res) => {
 // ========================================
 // COURSES - GET: ONE COURSE
 // ========================================
-app.get('/api/course/:id', async (req, res) => {
+app.get('/api/courses/:id', async (req, res) => {
     try {
         if (!validId(req.params.id)) {
             return res.status(400).json({ error: 'Invalid course ID.' });
@@ -663,7 +663,7 @@ app.get('/api/course/:id', async (req, res) => {
 // ========================================
 // COURSES - POST: CREATE A COURSE
 // ========================================
-app.post('/api/course', async (req, res) => {
+app.post('/api/courses', async (req, res) => {
     try {
         const error = validateCourse(req.body);
 
@@ -686,7 +686,7 @@ app.post('/api/course', async (req, res) => {
         }
 
         const [result] = await db.execute(
-            'INSERT INTO course (course_code, course_name) VALUES (?, ?)',
+            'INSERT INTO courses (course_code, course_name) VALUES (?, ?)',
             [code, name]
         );
 
@@ -711,7 +711,7 @@ app.post('/api/course', async (req, res) => {
 // ========================================
 // COURSES - PUT: UPDATE A COURSE
 // ========================================
-app.put('/api/course/:id', async (req, res) => {
+app.put('/api/courses/:id', async (req, res) => {
     try {
         if (!validId(req.params.id)) {
             return res.status(400).json({ error: 'Invalid course ID.' });
@@ -733,7 +733,7 @@ app.put('/api/course/:id', async (req, res) => {
 
         const [duplicates] = await db.execute(
             `SELECT course_id
-             FROM course
+             FROM courses
              WHERE course_code = ? AND course_id <> ?
              LIMIT 1`,
             [code, id]
@@ -746,7 +746,7 @@ app.put('/api/course/:id', async (req, res) => {
         }
 
         await db.execute(
-            `UPDATE course
+            `UPDATE courses
              SET course_code = ?, course_name = ?
              WHERE course_id = ?`,
             [code, name, id]
@@ -770,7 +770,7 @@ app.put('/api/course/:id', async (req, res) => {
 // COURSES - DELETE: REMOVE A COURSE
 // A course that is still assigned to patients cannot be deleted.
 // ========================================
-app.delete('/api/course/:id', async (req, res) => {
+app.delete('/api/courses/:id', async (req, res) => {
     try {
         if (!validId(req.params.id)) {
             return res.status(400).json({ error: 'Invalid course ID.' });
@@ -856,12 +856,15 @@ async function startServer() {
         if (connection) {
             connection.release();
         }
+        
+console.error('Database connection failed!');
+console.error('Error code:', err.code);
+console.error('Error message:', err.message);
+console.error('Error details:', err);
+process.exit(1);
 
-        console.error('Database connection failed!');
-        console.error('Error code:', err.code);
-        console.error('Error message:', err.message);
-        console.error('Error details:', err);
-        process.exit(1);
+
+       
     }
 }
 
