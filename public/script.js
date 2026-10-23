@@ -2,6 +2,7 @@
 
 (() => {
     const API = '/api/patients';
+    const COURSE_API = '/api/courses';
 
     // ========================================
     // ELEMENTS
@@ -18,6 +19,17 @@
     const sexInput = document.getElementById('sex');
     const contactInput = document.getElementById('contact_no');
     const addressInput = document.getElementById('address');
+    const courseSelect = document.getElementById('course_id');
+
+    // Course management elements
+    const courseForm = document.getElementById('courseForm');
+    const courseFormTitle = document.getElementById('courseFormTitle');
+    const courseMessageBox = document.getElementById('courseMessage');
+    const courseSaveButton = document.getElementById('courseSaveButton');
+    const courseCancelButton = document.getElementById('courseCancelButton');
+    const courseCodeInput = document.getElementById('course_code');
+    const courseNameInput = document.getElementById('course_name');
+    const courseList = document.getElementById('courseList');
 
     const searchInput = document.getElementById('search');
     const statusFilter = document.getElementById('statusFilter');
@@ -26,6 +38,8 @@
     const pageLoader = document.getElementById('pageLoader');
 
     let editingId = null;
+    let editingCourseId = null;
+    let courseMessageTimer = null;
     let requestCounter = 0;
     let pendingRequests = 0;
     let searchTimer = null;
@@ -202,6 +216,7 @@
         sexInput.value = patient.sex || '';
         contactInput.value = patient.contact_no || '';
         addressInput.value = patient.address || '';
+        courseSelect.value = patient.course_id ? String(patient.course_id) : '';
 
         formTitle.textContent = `Edit Patient #${patient.patient_id}`;
         setSaveLabel('Update Patient');
@@ -213,7 +228,7 @@
     // ========================================
     function renderEmpty(text) {
         patientList.innerHTML =
-            `<tr><td colspan="7" class="empty-state">${escapeHtml(text)}</td></tr>`;
+            `<tr><td colspan="8" class="empty-state">${escapeHtml(text)}</td></tr>`;
     }
 
     function renderPatients(patients) {
@@ -241,6 +256,11 @@
                     <td>${escapeHtml(p.first_name)} ${escapeHtml(p.last_name)}</td>
                     <td>${escapeHtml(formatDate(p.birthdate))}</td>
                     <td>${escapeHtml(p.sex)}</td>
+                    <td>${
+                        p.course_code
+                            ? `<span title="${escapeHtml(p.course_name)}">${escapeHtml(p.course_code)}</span>`
+                            : '—'
+                    }</td>
                     <td>${escapeHtml(p.contact_no || '—')}</td>
                     <td>
                         <span class="status-badge ${badgeClass}">
@@ -315,7 +335,8 @@
             birthdate: birthdateInput.value,
             sex: sexInput.value,
             contact_no: contactInput.value.trim() || null,
-            address: addressInput.value.trim() || null
+            address: addressInput.value.trim() || null,
+            course_id: courseSelect.value
         };
 
         const wasEditing = editingId !== null;
@@ -333,6 +354,7 @@
 
             resetForm();
             showMessage('success', result.message || 'Saved successfully.');
+            await loadCourses();
             await loadPatients();
         } catch (err) {
             saveButton.disabled = false;
@@ -396,6 +418,199 @@
     });
 
     // ========================================
+    // COURSES: MESSAGES
+    // ========================================
+    function clearCourseMessage() {
+        clearTimeout(courseMessageTimer);
+        courseMessageBox.textContent = '';
+        courseMessageBox.className = 'message';
+    }
+
+    function showCourseMessage(type, text) {
+        clearTimeout(courseMessageTimer);
+        courseMessageBox.textContent = text;
+        courseMessageBox.className = `message ${type}`;
+
+        if (type === 'success') {
+            courseMessageTimer = setTimeout(clearCourseMessage, 5000);
+        }
+    }
+
+    // ========================================
+    // COURSES: FORM MODE (ADD / EDIT)
+    // ========================================
+    function setCourseSaveLabel(text) {
+        courseSaveButton.innerHTML =
+            '<span aria-hidden="true">＋</span> ' + escapeHtml(text);
+    }
+
+    function resetCourseForm() {
+        courseForm.reset();
+        editingCourseId = null;
+        courseFormTitle.textContent = 'Add New Course';
+        setCourseSaveLabel('Save Course');
+        courseSaveButton.disabled = false;
+        clearCourseMessage();
+    }
+
+    // ========================================
+    // COURSES: LOAD, DROPDOWN, AND TABLE
+    // ========================================
+    // Fills the Course dropdown in the patient form from the database.
+    function populateCourseDropdown(courses) {
+        const previous = courseSelect.value;
+
+        courseSelect.innerHTML = '<option value="">Select a course</option>';
+
+        courses.forEach((c) => {
+            const option = document.createElement('option');
+            option.value = String(c.course_id);
+            option.textContent = `${c.course_code} — ${c.course_name}`;
+            courseSelect.appendChild(option);
+        });
+
+        // Keep the current choice if it still exists.
+        if (previous && courses.some((c) => String(c.course_id) === previous)) {
+            courseSelect.value = previous;
+        }
+    }
+
+    function renderCourseEmpty(text) {
+        courseList.innerHTML =
+            `<tr><td colspan="5" class="empty-state">${escapeHtml(text)}</td></tr>`;
+    }
+
+    function renderCourses(courses) {
+        if (!courses.length) {
+            renderCourseEmpty('No courses yet. Add your first course above.');
+            return;
+        }
+
+        courseList.innerHTML = courses
+            .map((c) => `
+                <tr>
+                    <td>${escapeHtml(c.course_id)}</td>
+                    <td>${escapeHtml(c.course_code)}</td>
+                    <td>${escapeHtml(c.course_name)}</td>
+                    <td>${escapeHtml(c.patient_count)}</td>
+                    <td>
+                        <button type="button" class="action-btn"
+                            data-action="edit-course"
+                            data-id="${escapeHtml(c.course_id)}">Edit</button>
+                        <button type="button" class="action-btn"
+                            data-action="delete-course"
+                            data-id="${escapeHtml(c.course_id)}"
+                            data-code="${escapeHtml(c.course_code)}">Delete</button>
+                    </td>
+                </tr>`)
+            .join('');
+    }
+
+    async function loadCourses() {
+        try {
+            const courses = await api(COURSE_API);
+            populateCourseDropdown(courses);
+            renderCourses(courses);
+        } catch (err) {
+            renderCourseEmpty(err.message || 'Unable to load courses.');
+        }
+    }
+
+    // ========================================
+    // COURSES: SUBMIT (CREATE OR UPDATE)
+    // ========================================
+    courseForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        clearCourseMessage();
+
+        const payload = {
+            course_code: courseCodeInput.value.trim(),
+            course_name: courseNameInput.value.trim()
+        };
+
+        const wasEditing = editingCourseId !== null;
+        const url = wasEditing ? `${COURSE_API}/${editingCourseId}` : COURSE_API;
+        const method = wasEditing ? 'PUT' : 'POST';
+
+        courseSaveButton.disabled = true;
+        courseSaveButton.textContent = 'Saving...';
+
+        try {
+            const result = await api(url, {
+                method,
+                body: JSON.stringify(payload)
+            });
+
+            resetCourseForm();
+            showCourseMessage('success', result.message || 'Saved successfully.');
+
+            // Refresh the table and dropdown, then the patient list
+            // (a renamed course changes what the patient table shows).
+            await loadCourses();
+            await loadPatients();
+        } catch (err) {
+            courseSaveButton.disabled = false;
+            setCourseSaveLabel(wasEditing ? 'Update Course' : 'Save Course');
+            showCourseMessage('error', err.message);
+        }
+    });
+
+    courseCancelButton.addEventListener('click', resetCourseForm);
+
+    // ========================================
+    // COURSES: TABLE ACTIONS (EDIT / DELETE)
+    // ========================================
+    courseList.addEventListener('click', async (event) => {
+        const button = event.target.closest('button[data-action]');
+        if (!button) return;
+
+        const id = button.dataset.id;
+        const action = button.dataset.action;
+
+        if (action === 'edit-course') {
+            try {
+                const course = await api(`${COURSE_API}/${id}`);
+
+                editingCourseId = course.course_id;
+                courseCodeInput.value = course.course_code || '';
+                courseNameInput.value = course.course_name || '';
+                courseFormTitle.textContent = `Edit Course #${course.course_id}`;
+                setCourseSaveLabel('Update Course');
+                clearCourseMessage();
+
+                document
+                    .getElementById('courses')
+                    .scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                courseCodeInput.focus({ preventScroll: true });
+            } catch (err) {
+                alert(err.message);
+            }
+            return;
+        }
+
+        if (action === 'delete-course') {
+            if (!confirm(`Delete course ${button.dataset.code}? This cannot be undone.`)) {
+                return;
+            }
+
+            button.disabled = true;
+
+            try {
+                const result = await api(`${COURSE_API}/${id}`, { method: 'DELETE' });
+
+                if (editingCourseId === Number(id)) resetCourseForm();
+
+                showCourseMessage('success', result.message || 'Course deleted.');
+                await loadCourses();
+            } catch (err) {
+                button.disabled = false;
+                showCourseMessage('error', err.message);
+            }
+        }
+    });
+
+    // ========================================
     // SEARCH AND FILTER
     // ========================================
     searchInput.addEventListener('input', () => {
@@ -422,5 +637,6 @@
     // ========================================
     injectLoaderStyles();
     birthdateInput.max = todayString();
+    loadCourses();
     loadPatients();
 })();
