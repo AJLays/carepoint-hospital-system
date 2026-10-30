@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctors &amp; Departments | CarePoint</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="doctors.js" defer></script>
+</head>
+<body>
+<div class="app-layout">
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">+</div>
+            <div class="brand-text"><h2>CarePoint</h2><p>Hospital Management</p></div>
+        </div>
+        <div class="sidebar-label">MAIN MENU</div>
+        <nav class="navigation">
+            <a href="index.html#dashboard" class="nav-link"><span class="nav-icon">▦</span> Dashboard</a>
+            <a href="index.html#patient-records" class="nav-link"><span class="nav-icon">♙</span> Patient Records</a>
+            <a href="index.html#registration" class="nav-link"><span class="nav-icon">＋</span> Register Patient</a>
+            <a href="index.html#courses" class="nav-link"><span class="nav-icon">▤</span> Courses</a>
+            <a href="doctors.html" class="nav-link active"><span class="nav-icon">✚</span> Doctors &amp; Departments</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div>
+                <p class="breadcrumb">Home / <span>Doctors &amp; Departments</span></p>
+                <h1>Doctors &amp; Departments</h1>
+            </div>
+        </header>
+
+        <!-- Departments -->
+        <section class="panel" id="departments">
+            <div class="panel-heading">
+                <div class="heading-left">
+                    <div class="heading-icon">▤</div>
+                    <div><h2 id="deptTitle">Add Department</h2><p>Departments doctors can be assigned to.</p></div>
+                </div>
+                <span class="required-note">* Required fields</span>
+            </div>
+            <div class="panel-body">
+                <form id="deptForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="department_name">Department Name <span>*</span></label>
+                            <input type="text" id="department_name" maxlength="100" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="department_description">Description</label>
+                            <input type="text" id="department_description" maxlength="255">
+                        </div>
+                    </div>
+                    <div id="deptMsg" class="message" role="status" aria-live="polite"></div>
+                    <div class="form-actions">
+                        <button type="button" id="deptCancel" class="btn btn-secondary">Cancel</button>
+                        <button type="submit" id="deptSave" class="btn btn-primary">Save Department</button>
+                    </div>
+                </form>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>Department</th><th>Description</th><th>Doctors</th><th>Status</th><th>Actions</th></tr></thead>
+                    <tbody id="deptList"><tr><td colspan="5" class="empty-state">Loading...</td></tr></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Doctors -->
+        <section class="panel" id="doctors">
+            <div class="panel-heading">
+                <div class="heading-left">
+                    <div class="heading-icon">✚</div>
+                    <div><h2 id="docTitle">Register Doctor</h2><p>Assign each doctor a specialization and department.</p></div>
+                </div>
+                <span class="required-note">* Required fields</span>
+            </div>
+            <div class="panel-body">
+                <form id="docForm">
+                    <div class="form-grid">
+                        <div class="form-group"><label for="d_first">First Name <span>*</span></label>
+                            <input type="text" id="d_first" maxlength="50" required></div>
+                        <div class="form-group"><label for="d_last">Last Name <span>*</span></label>
+                            <input type="text" id="d_last" maxlength="50" required></div>
+                        <div class="form-group"><label for="d_spec">Specialization <span>*</span></label>
+                            <input type="text" id="d_spec" maxlength="100" required></div>
+                        <div class="form-group"><label for="d_dept">Department <span>*</span></label>
+                            <select id="d_dept" required><option value="">Select a department</option></select></div>
+                        <div class="form-group"><label for="d_license">License No.</label>
+                            <input type="text" id="d_license" maxlength="80"></div>
+                        <div class="form-group"><label for="d_contact">Contact Number</label>
+                            <input type="tel" id="d_contact" maxlength="20"></div>
+                        <div class="form-group"><label for="d_email">Email</label>
+                            <input type="email" id="d_email" maxlength="120"></div>
+                    </div>
+                    <div id="docMsg" class="message" role="status" aria-live="polite"></div>
+                    <div class="form-actions">
+                        <button type="button" id="docCancel" class="btn btn-secondary">Cancel</button>
+                        <button type="submit" id="docSave" class="btn btn-primary">Save Doctor</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="records-toolbar">
+                <div class="search-box">
+                    <span aria-hidden="true">⌕</span>
+                    <input type="search" id="docSearch" placeholder="Search name, specialization, license..." aria-label="Search doctors">
+                </div>
+                <div class="filter-box">
+                    <label for="docDeptFilter">Department:</label>
+                    <select id="docDeptFilter"><option value="">All</option></select>
+                    <label for="docStatus">Status:</label>
+                    <select id="docStatus">
+                        <option value="">All</option><option value="active">Active</option><option value="inactive">Inactive</option>
+                    </select>
+                </div>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>ID</th><th>Doctor</th><th>Specialization</th><th>Department</th><th>Contact</th><th>Status</th><th>Actions</th></tr></thead>
+                    <tbody id="docList"><tr><td colspan="7" class="empty-state">Loading...</td></tr></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+</body>
+</html>

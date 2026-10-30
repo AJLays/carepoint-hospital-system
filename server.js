@@ -809,6 +809,9 @@ app.delete('/api/courses/:id', async (req, res) => {
     }
 });
 
+// Phase 3: departments and doctors
+app.use('/api', require('./routes/doctorRoutes')(db));
+
 // ========================================
 // HEALTH CHECK
 // ========================================
