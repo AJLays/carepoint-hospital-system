@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CarePoint | Rooms & Beds</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .rooms-wrap{max-width:1200px;margin:0 auto}.rooms-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:22px 0}.room-card{background:#fff;border:1px solid #e5eaf1;border-radius:14px;padding:20px}.room-card h3{margin:0 0 6px}.muted{color:#718096;font-size:13px}.room-meta{display:flex;gap:18px;margin:14px 0}.room-meta strong{display:block;font-size:20px}.status{display:inline-block;padding:5px 9px;border-radius:20px;font-size:12px;background:#edf2f7}.available{background:#e6f7ed;color:#16834a}.occupied{background:#fff2dc;color:#a65b00}.maintenance{background:#feecec;color:#b42318}.rooms-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.rooms-actions button,.rooms-form button{border:0;border-radius:8px;padding:9px 13px;cursor:pointer;background:#1769d2;color:white}.rooms-actions button.secondary{background:#eaf1fb;color:#1769d2}.rooms-panels{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}.rooms-panel{background:#fff;border:1px solid #e5eaf1;border-radius:14px;padding:20px}.rooms-form{display:grid;gap:10px}.rooms-form label{font-size:13px;font-weight:600}.rooms-form input,.rooms-form select,.rooms-form textarea{width:100%;padding:10px;border:1px solid #d7deea;border-radius:8px;box-sizing:border-box}.rooms-form button{margin-top:5px}.beds-table{width:100%;border-collapse:collapse;margin-top:14px;background:white}.beds-table th,.beds-table td{text-align:left;padding:11px;border-bottom:1px solid #edf0f5;font-size:13px}.beds-table th{color:#64748b}.notice{padding:10px 12px;border-radius:8px;margin:12px 0;background:#eef5ff;color:#174a88}.notice.error{background:#fff0f0;color:#a32121}.empty{padding:22px;text-align:center;color:#718096}.top-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  </style>
+  <script src="rooms.js" defer></script>
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-icon">+</div><div class="brand-text"><h2>CarePoint</h2><p>Hospital Management</p></div></div>
+      <div class="sidebar-label">MAIN MENU</div>
+      <nav class="navigation">
+        <a href="index.html#dashboard" class="nav-link"><span class="nav-icon">▦</span>Dashboard</a>
+        <a href="index.html#patient-records" class="nav-link"><span class="nav-icon">♙</span>Patient Records</a>
+        <a href="index.html#registration" class="nav-link"><span class="nav-icon">＋</span>Register Patient</a>
+        <a href="doctors.html" class="nav-link"><span class="nav-icon">✚</span>Doctors &amp; Departments</a>
+        <a href="rooms.html" class="nav-link active"><span class="nav-icon">▣</span>Rooms &amp; Beds</a>
+      </nav>
+      <div class="sidebar-bottom"><div class="sidebar-footer"><span class="status-dot"></span>Hospital System <span class="version">v1.0</span></div></div>
+    </aside>
+    <main class="main-content"><header class="topbar"><div><p class="breadcrumb">Home / <span>Room Management</span></p><h1>Rooms &amp; Beds</h1></div><div class="topbar-right"><a class="btn btn-secondary" href="index.html">Back to Patients</a></div></header>
+      <div class="rooms-wrap">
+        <div class="top-actions"><div><h2>Room Overview</h2><p class="muted">Manage hospital rooms, beds, and availability.</p></div><button class="btn btn-primary" id="refreshBtn" type="button">Refresh</button></div>
+        <div id="notice" class="notice" role="status">Loading rooms and beds…</div>
+        <section id="roomCards" class="rooms-grid"><div class="empty">Loading…</div></section>
+        <section class="rooms-panels">
+          <div class="rooms-panel"><h2>Add Room</h2><p class="muted">Create a room record.</p><form id="roomForm" class="rooms-form">
+            <div><label for="room_number">Room Number *</label><input id="room_number" name="room_number" maxlength="20" required></div>
+            <div><label for="room_type">Room Type *</label><input id="room_type" name="room_type" maxlength="40" placeholder="e.g. General, Private, ICU" required></div>
+            <div><label for="room_rate">Room Rate *</label><input id="room_rate" name="room_rate" type="number" min="0" step="0.01" required></div>
+            <div><label for="room_notes">Notes</label><textarea id="room_notes" name="notes" rows="2"></textarea></div>
+            <button type="submit">Save Room</button>
+          </form></div>
+          <div class="rooms-panel"><h2>Add Bed</h2><p class="muted">Assign a bed to an existing room.</p><form id="bedForm" class="rooms-form">
+            <div><label for="bed_room">Room *</label><select id="bed_room" name="room_id" required><option value="">Select room</option></select></div>
+            <div><label for="bed_number">Bed Number *</label><input id="bed_number" name="bed_number" maxlength="20" required></div>
+            <button type="submit">Save Bed</button>
+          </form></div>
+        </section>
+        <section class="rooms-panel" style="margin-top:18px"><h2>Bed Inventory</h2><div style="overflow-x:auto"><table class="beds-table"><thead><tr><th>Room</th><th>Type</th><th>Bed</th><th>Status</th><th>Action</th></tr></thead><tbody id="bedRows"><tr><td colspan="5" class="empty">Loading beds…</td></tr></tbody></table></div></section>
+      </div>
+    </main>
+  </div>
+</body></html>
