@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CarePoint | Treatments & Medications</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .tm-wrap{max-width:1400px;margin:0 auto}.tm-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin:22px 0}.tm-card{background:#fff;border:1px solid #e6eaf0;border-radius:14px;padding:22px;box-shadow:0 4px 20px rgba(24,49,83,.045)}.tm-card h2{font-size:18px;margin-bottom:6px}.tm-muted{color:#7b8798;font-size:13px;margin-bottom:18px}.tm-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.tm-field{display:flex;flex-direction:column;gap:6px}.tm-field.full{grid-column:1/-1}.tm-field label{font-weight:600;font-size:12px;color:#344054}.tm-field input,.tm-field select,.tm-field textarea{width:100%;border:1px solid #d8dee8;border-radius:8px;padding:10px 11px;background:#fff;color:#1d2939}.tm-field textarea{min-height:75px;resize:vertical}.tm-btn{border:0;border-radius:8px;padding:10px 16px;background:#1769d2;color:white;font-weight:600;cursor:pointer}.tm-btn.secondary{background:#edf4ff;color:#1769d2}.tm-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:14px}.tm-message{font-size:13px;margin-top:10px;min-height:18px}.tm-message.error{color:#b42318}.tm-message.success{color:#067647}.tm-table-wrap{overflow-x:auto}.tm-table{width:100%;border-collapse:collapse;font-size:13px}.tm-table th,.tm-table td{padding:11px 10px;border-bottom:1px solid #edf0f4;text-align:left;white-space:nowrap}.tm-table th{color:#667085;font-size:11px;text-transform:uppercase;letter-spacing:.04em}.tm-pill{display:inline-block;padding:4px 8px;border-radius:99px;background:#eaf3ff;color:#1769d2;font-size:11px;font-weight:700}.tm-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.tm-top a{color:#1769d2;text-decoration:none;font-weight:600}.tm-full{grid-column:1/-1}.tm-inline{display:flex;gap:8px;align-items:center}.tm-inline input{max-width:110px}@media(max-width:850px){.tm-grid{grid-template-columns:1fr}.tm-form{grid-template-columns:1fr}.tm-field.full{grid-column:auto}}
+  </style>
+  <script src="treatments-medications.js" defer></script>
+</head>
+<body>
+  <main class="main-content tm-wrap" style="padding:28px;max-width:1500px;margin:auto">
+    <header class="topbar tm-top" style="margin-bottom:20px">
+      <div><p class="breadcrumb">CarePoint / Clinical Management</p><h1>Treatments &amp; Medications</h1><p class="tm-muted" style="margin:5px 0 0">Record clinical care and manage medication inventory and orders.</p></div>
+      <a href="/">← Back to Dashboard</a>
+    </header>
+    <section class="tm-grid">
+      <article class="tm-card">
+        <h2>Record Treatment</h2><p class="tm-muted">Only active admissions can receive a new treatment record.</p>
+        <form id="treatmentForm" class="tm-form">
+          <div class="tm-field full"><label for="tAdmission">Active admission *</label><select id="tAdmission" required><option value="">Loading admissions...</option></select></div>
+          <div class="tm-field"><label for="tDoctor">Attending doctor</label><select id="tDoctor"><option value="">Not specified</option></select></div>
+          <div class="tm-field"><label for="tDate">Treatment date</label><input id="tDate" type="datetime-local"></div>
+          <div class="tm-field full"><label for="tDiagnosis">Diagnosis *</label><textarea id="tDiagnosis" maxlength="10000" required></textarea></div>
+          <div class="tm-field full"><label for="tDetails">Treatment details *</label><textarea id="tDetails" maxlength="10000" required></textarea></div>
+          <div class="tm-field"><label for="tCost">Treatment cost *</label><input id="tCost" type="number" min="0" step="0.01" value="0" required></div>
+          <div class="tm-field" style="justify-content:end"><button class="tm-btn" type="submit">Save Treatment</button></div>
+        </form><p id="treatmentMessage" class="tm-message" role="status"></p>
+      </article>
+      <article class="tm-card">
+        <h2>Add Medication to Inventory</h2><p class="tm-muted">Create a medication record with its current stock.</p>
+        <form id="medicationForm" class="tm-form">
+          <div class="tm-field full"><label for="mName">Medication name *</label><input id="mName" maxlength="120" required></div>
+          <div class="tm-field"><label for="mForm">Dosage form</label><input id="mForm" placeholder="Tablet, capsule, syrup..."></div>
+          <div class="tm-field"><label for="mPrice">Unit price *</label><input id="mPrice" type="number" min="0" step="0.01" value="0" required></div>
+          <div class="tm-field"><label for="mStock">Initial stock *</label><input id="mStock" type="number" min="0" step="1" value="0" required></div>
+          <div class="tm-field full"><label for="mDescription">Description</label><textarea id="mDescription"></textarea></div>
+          <div class="tm-field full"><button class="tm-btn" type="submit">Add Medication</button></div>
+        </form><p id="medicationMessage" class="tm-message" role="status"></p>
+      </article>
+      <article class="tm-card tm-full">
+        <h2>Create Medication Order</h2><p class="tm-muted">Creating an order deducts the selected quantity from available inventory.</p>
+        <form id="orderForm" class="tm-form">
+          <div class="tm-field"><label for="oAdmission">Active admission *</label><select id="oAdmission" required><option value="">Loading admissions...</option></select></div>
+          <div class="tm-field"><label for="oDoctor">Prescribing doctor</label><select id="oDoctor"><option value="">Not specified</option></select></div>
+          <div class="tm-field"><label for="oMedication">Medication *</label><select id="oMedication" required><option value="">Loading medications...</option></select></div>
+          <div class="tm-field"><label for="oQuantity">Quantity *</label><input id="oQuantity" type="number" min="1" step="1" value="1" required></div>
+          <div class="tm-field"><label for="oDose">Dose</label><input id="oDose" placeholder="e.g. 500 mg"></div>
+          <div class="tm-field"><label for="oFrequency">Frequency</label><input id="oFrequency" placeholder="e.g. 3 times daily"></div>
+          <div class="tm-field"><label for="oDuration">Duration</label><input id="oDuration" placeholder="e.g. 5 days"></div>
+          <div class="tm-field"><label for="oInstructions">Order instructions</label><input id="oInstructions" placeholder="Optional instructions"></div>
+          <div class="tm-field full"><button class="tm-btn" type="submit">Create Medication Order</button></div>
+        </form><p id="orderMessage" class="tm-message" role="status"></p>
+      </article>
+      <article class="tm-card tm-full">
+        <div class="tm-top"><div><h2>Medication Inventory</h2><p class="tm-muted">Update stock quantities when inventory is replenished or corrected.</p></div><button id="refreshButton" class="tm-btn secondary" type="button">Refresh data</button></div>
+        <div class="tm-table-wrap"><table class="tm-table"><thead><tr><th>Medication</th><th>Form</th><th>Unit price</th><th>Stock</th><th>Status</th><th>Update stock</th></tr></thead><tbody id="medicationRows"><tr><td colspan="6">Loading...</td></tr></tbody></table></div>
+      </article>
+      <article class="tm-card tm-full">
+        <h2>Treatment History</h2><div class="tm-table-wrap"><table class="tm-table"><thead><tr><th>Date</th><th>Patient</th><th>Diagnosis</th><th>Treatment</th><th>Doctor</th><th>Cost</th></tr></thead><tbody id="treatmentRows"><tr><td colspan="6">Loading...</td></tr></tbody></table></div>
+      </article>
+      <article class="tm-card tm-full">
+        <h2>Medication Orders</h2><div class="tm-table-wrap"><table class="tm-table"><thead><tr><th>Order ID</th><th>Patient</th><th>Ordered at</th><th>Instructions</th></tr></thead><tbody id="orderRows"><tr><td colspan="4">Loading...</td></tr></tbody></table></div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
