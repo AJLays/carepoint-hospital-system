@@ -40,10 +40,6 @@
                     <span class="nav-icon">＋</span>
                     Register Patient
                 </a>
-                <a href="#courses" class="nav-link">
-                    <span class="nav-icon">▤</span>
-                    Courses
-                </a>
                 <a href="doctors.html" class="nav-link">
                     <span class="nav-icon">✚</span>
                     Doctors &amp; Departments
@@ -241,20 +237,6 @@
                             </div>
                         </div>
 
-                        <div class="form-section-title second-section">
-                            <span>03</span>
-                            Course Information
-                        </div>
-
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="course_id">Course <span>*</span></label>
-                                <select id="course_id" name="course_id" required>
-                                    <option value="">Select a course</option>
-                                </select>
-                            </div>
-                        </div>
-
                         <div
                             id="message"
                             class="message"
@@ -281,108 +263,6 @@
                             </button>
                         </div>
                     </form>
-                </div>
-            </section>
-
-            <!-- Course Management -->
-            <section class="panel" id="courses">
-                <div class="panel-heading">
-                    <div class="heading-left">
-                        <div class="heading-icon">▤</div>
-                        <div>
-                            <h2 id="courseFormTitle">Add New Course</h2>
-                            <p>Create, view, edit, and delete course records.</p>
-                        </div>
-                    </div>
-
-                    <span class="required-note">* Required fields</span>
-                </div>
-
-                <div class="panel-body">
-                    <form id="courseForm">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="course_code">
-                                    Course Code <span>*</span>
-                                </label>
-                                <input
-                                    type="text"
-                                    id="course_code"
-                                    name="course_code"
-                                    placeholder="e.g. BSIT"
-                                    maxlength="20"
-                                    required
-                                >
-                            </div>
-
-                            <div class="form-group">
-                                <label for="course_name">
-                                    Course Name <span>*</span>
-                                </label>
-                                <input
-                                    type="text"
-                                    id="course_name"
-                                    name="course_name"
-                                    placeholder="e.g. Bachelor of Science in Information Technology"
-                                    maxlength="100"
-                                    required
-                                >
-                            </div>
-                        </div>
-
-                        <div
-                            id="courseMessage"
-                            class="message"
-                            role="status"
-                            aria-live="polite"
-                        ></div>
-
-                        <div class="form-actions">
-                            <button
-                                type="button"
-                                id="courseCancelButton"
-                                class="btn btn-secondary"
-                            >
-                                Cancel
-                            </button>
-
-                            <button
-                                type="submit"
-                                id="courseSaveButton"
-                                class="btn btn-primary"
-                            >
-                                <span aria-hidden="true">＋</span>
-                                Save Course
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Course Code</th>
-                                <th>Course Name</th>
-                                <th>Patients</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-
-                        <tbody id="courseList">
-                            <tr>
-                                <td colspan="5" class="empty-state">
-                                    Loading courses...
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="table-footer">
-                    <span>Courses listed here appear in the patient Course dropdown.</span>
-                    <span class="secure-label">✚ CarePoint Management</span>
                 </div>
             </section>
 
@@ -430,7 +310,6 @@
                                 <th>Patient Name</th>
                                 <th>Date of Birth</th>
                                 <th>Sex</th>
-                                <th>Course</th>
                                 <th>Contact Number</th>
                                 <th>Status</th>
                                 <th>Actions</th>
@@ -439,7 +318,7 @@
 
                         <tbody id="patientList">
                             <tr>
-                                <td colspan="8" class="empty-state">
+                                <td colspan="7" class="empty-state">
                                     Loading patient records...
                                 </td>
                             </tr>
@@ -456,7 +335,7 @@
             <!-- Footer -->
             <footer class="page-footer">
                 <span>© 2026 CarePoint Hospital Management System</span>
-                <span>Patient information management portal</span>
+                <span>Hospital patient information management portal</span>
             </footer>
 
         </main>
