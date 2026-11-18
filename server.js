@@ -30,6 +30,7 @@ if (isProduction) {
 }
 
 const db = mysql.createPool(dbConfig);
+app.use('/api/auth', require('./routes/authRoutes')(db));
 
 const validId = (value) =>
   value !== undefined &&
