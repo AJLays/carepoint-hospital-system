@@ -7,6 +7,11 @@ const path = require('path');
 
 const app = express();
 app.use(express.json({ limit: '1mb' }));
+
+// Default page: login
+app.get('/', (req, res) => {
+  res.redirect('/login.html');
+});
 app.use(express.static(path.join(__dirname, 'public')));
 
 const isProduction = Boolean(process.env.DB_HOST);
