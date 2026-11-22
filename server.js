@@ -32,6 +32,54 @@ if (isProduction) {
 const db = mysql.createPool(dbConfig);
 app.use('/api/auth', require('./routes/authRoutes')(db));
 
+const crypto = require('crypto');
+
+function hashSessionToken(token) {
+  return crypto.createHash('sha256').update(token).digest('hex');
+}
+
+// Authentication middleware for all API routes registered after this point.
+// The auth endpoints remain public so users can log in and log out.
+async function requireAuth(req, res, next) {
+  try {
+    const header = req.headers.authorization || '';
+    if (!header.startsWith('Bearer ')) {
+      return res.status(401).json({ error: 'Not logged in.' });
+    }
+
+    const token = header.slice(7).trim();
+    if (!token) {
+      return res.status(401).json({ error: 'Invalid session.' });
+    }
+
+    const [rows] = await db.execute(
+      `SELECT u.user_id, u.username, u.full_name, u.role
+       FROM user_sessions s
+       JOIN staff_users u ON u.user_id = s.user_id
+       WHERE s.token_hash = ?
+         AND s.expires_at > NOW()
+         AND u.status = 'active'
+       LIMIT 1`,
+      [hashSessionToken(token)]
+    );
+
+    if (!rows.length) {
+      return res.status(401).json({ error: 'Session expired or invalid.' });
+    }
+
+    req.user = rows[0];
+    return next();
+  } catch (err) {
+    console.error('Authentication middleware:', err.message);
+    return res.status(500).json({ error: 'Unable to verify authentication.' });
+  }
+}
+
+app.use('/api', (req, res, next) => {
+  if (req.path === '/health') return next();
+  return requireAuth(req, res, next);
+});
+
 const validId = (value) =>
   value !== undefined &&
   value !== null &&
