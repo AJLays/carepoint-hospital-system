@@ -1,93 +1,56 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CarePoint | Staff Management</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CarePoint | Staff Management</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="auth.js"></script>
+  <script src="staff.js" defer></script>
 </head>
 <body>
-
-    <header>
-        <h1>CarePoint Hospital</h1>
-        <p>Staff Management</p>
-    </header>
-
-    <main>
-        <section>
-            <h2>Add New Staff</h2>
-
-            <form id="staffForm">
-
-                <label for="full_name">Full Name</label>
-                <input
-                    type="text"
-                    id="full_name"
-                    maxlength="120"
-                    required
-                >
-
-                <label for="username">Username</label>
-                <input
-                    type="text"
-                    id="username"
-                    minlength="3"
-                    maxlength="60"
-                    required
-                >
-
-                <label for="role">Staff Role</label>
-                <select id="role" required>
-                    <option value="">Select a role</option>
-                    <option value="receptionist">Receptionist</option>
-                    <option value="doctor">Doctor</option>
-                    <option value="nurse">Nurse</option>
-                    <option value="billing">Billing Staff</option>
-                    <option value="pharmacist">Pharmacist</option>
-                    <option value="admin">Administrator</option>
-                </select>
-
-                <label for="password">Temporary Password</label>
-                <input
-                    type="password"
-                    id="password"
-                    minlength="10"
-                    required
-                >
-
-                <button type="submit">Create Staff Account</button>
-
-            </form>
-
-            <p id="message" role="status"></p>
-        </section>
-
-        <section>
-            <h2>Staff Members</h2>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Full Name</th>
-                        <th>Username</th>
-                        <th>Role</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-
-                <tbody id="staffTable">
-                    <tr>
-                        <td colspan="5">Loading staff members...</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-icon">+</div><div class="brand-text"><h2>CarePoint</h2><p>Hospital Management</p></div></div>
+      <div class="sidebar-label">MAIN MENU</div>
+      <nav class="navigation">
+<a href="index.html#dashboard" class="nav-link"><span class="nav-icon">▦</span>Dashboard</a>
+<a href="index.html#patient-records" class="nav-link"><span class="nav-icon">♙</span>Patient Records</a>
+<a href="index.html#registration" class="nav-link"><span class="nav-icon">＋</span>Register Patient</a>
+<a href="doctors.html" class="nav-link"><span class="nav-icon">✚</span>Doctors &amp; Departments</a>
+<a href="admissions.html" class="nav-link"><span class="nav-icon">▤</span>Admissions &amp; Discharge</a>
+<a href="rooms.html" class="nav-link"><span class="nav-icon">▣</span>Rooms &amp; Beds</a>
+<a href="treatments-medications.html" class="nav-link"><span class="nav-icon">✚</span>Treatments &amp; Medications</a>
+<a href="billing.html" class="nav-link"><span class="nav-icon">₱</span>Services &amp; Billing</a>
+<a href="reports.html" class="nav-link"><span class="nav-icon">▤</span>Reports</a>
+<a href="staff.html" class="nav-link"><span class="nav-icon">♙</span>Staff Management</a>
+</nav>
+      <div class="sidebar-bottom"><div class="sidebar-footer"><span class="status-dot"></span>Hospital System <span class="version">v1.0</span></div></div>
+    </aside>
+    <main class="main-content">
+      <header class="topbar"><div><p class="breadcrumb">CarePoint / <span>Staff Management</span></p><h1>Staff Management</h1></div></header>
+      <section class="welcome-section"><div><p class="eyebrow">TEAM ADMINISTRATION</p><h2>Manage Hospital Staff</h2><p class="welcome-description">Create staff accounts, assign roles, and manage account access from one place.</p></div><div class="welcome-symbol" aria-hidden="true">✚</div></section>
+      <section class="panel">
+        <div class="panel-heading"><div class="heading-left"><div class="heading-icon">＋</div><div><h2>Add New Staff</h2><p>Create an account for a hospital team member.</p></div></div><span class="required-note">* Required fields</span></div>
+        <div class="panel-body">
+          <form id="staffForm">
+            <div class="form-grid">
+              <div class="form-group"><label for="full_name">Full Name *</label><input type="text" id="full_name" maxlength="120" required placeholder="Enter full name"></div>
+              <div class="form-group"><label for="username">Username *</label><input type="text" id="username" minlength="3" maxlength="60" required placeholder="Create username"></div>
+              <div class="form-group"><label for="role">Staff Role *</label><select id="role" required><option value="">Select a role</option><option value="receptionist">Receptionist</option><option value="doctor">Doctor</option><option value="nurse">Nurse</option><option value="billing">Billing Staff</option><option value="pharmacist">Pharmacist</option><option value="admin">Administrator</option></select></div>
+              <div class="form-group"><label for="password">Temporary Password *</label><input type="password" id="password" minlength="10" required placeholder="At least 10 characters"></div>
+            </div>
+            <div class="form-actions"><button type="submit" class="btn btn-primary">Create Staff Account</button></div>
+          </form>
+          <p id="message" class="message" role="status" aria-live="polite"></p>
+        </div>
+      </section>
+      <section class="panel">
+        <div class="panel-heading records-heading"><div class="heading-left"><div class="heading-icon">♙</div><div><h2>Staff Members</h2><p>View staff accounts and manage their status.</p></div></div></div>
+        <div class="table-container"><table><thead><tr><th>Full Name</th><th>Username</th><th>Role</th><th>Status</th><th>Action</th></tr></thead><tbody id="staffTable"><tr><td colspan="5" class="empty-state">Loading staff members...</td></tr></tbody></table></div>
+      </section>
+      <footer class="page-footer"><span>© 2026 CarePoint Hospital Management System</span><span>Staff administration</span></footer>
     </main>
-
-    <script src="auth.js"></script>
-    <script src="staff.js"></script>
-
+  </div>
 </body>
 </html>

@@ -5,9 +5,18 @@
 <title>CarePoint | Admissions & Discharge</title><link rel="stylesheet" href="style.css"><script src="auth.js"></script><script src="admissions.js" defer></script>
 <style>
 .page-wrap{max-width:1250px;margin:0 auto}.panel{background:#fff;border:1px solid #e6eaf0;border-radius:14px;padding:20px;margin:18px 0}.muted{color:#7b8798}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.form-field{display:grid;gap:6px}.form-field label{font-weight:600;font-size:13px}.form-field input,.form-field select,.form-field textarea{width:100%;padding:10px;border:1px solid #d7deea;border-radius:8px;background:white}.form-actions{display:flex;gap:10px;align-items:center;margin-top:14px}.notice{padding:11px 13px;border-radius:8px;background:#eef5ff;color:#174a88;margin:12px 0}.notice.error{background:#fff0f0;color:#a32121}.notice.success{background:#e9f8ef;color:#176b3a}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;background:white}th,td{text-align:left;padding:11px;border-bottom:1px solid #edf0f5;font-size:13px;white-space:nowrap}th{color:#64748b}.pill{display:inline-block;border-radius:20px;padding:5px 9px;background:#edf2f7;font-size:12px}.pill.admitted{background:#e6f7ed;color:#16834a}.pill.discharged{background:#eaf1fb;color:#1769d2}.btn-small{padding:7px 10px;border:0;border-radius:7px;background:#1769d2;color:white;cursor:pointer}.btn-small:disabled{opacity:.5;cursor:not-allowed}.topline{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.empty{text-align:center;padding:24px;color:#7b8798}
-</style></head>
+</style><link rel="stylesheet" href="style.css" data-theme-override>\n</head>
 <body><div class="app-layout"><aside class="sidebar"><div class="brand"><div class="brand-icon">+</div><div class="brand-text"><h2>CarePoint</h2><p>Hospital Management</p></div></div><div class="sidebar-label">MAIN MENU</div><nav class="navigation">
-<a href="index.html#dashboard" class="nav-link"><span class="nav-icon">▦</span>Dashboard</a><a href="index.html#patient-records" class="nav-link"><span class="nav-icon">♙</span>Patient Records</a><a href="index.html#registration" class="nav-link"><span class="nav-icon">＋</span>Register Patient</a><a href="doctors.html" class="nav-link"><span class="nav-icon">✚</span>Doctors &amp; Departments</a><a href="rooms.html" class="nav-link"><span class="nav-icon">▣</span>Rooms &amp; Beds</a><a href="admissions.html" class="nav-link active"><span class="nav-icon">▤</span>Admissions &amp; Discharge</a>
+<a href="index.html#dashboard" class="nav-link"><span class="nav-icon">▦</span>Dashboard</a>
+<a href="index.html#patient-records" class="nav-link"><span class="nav-icon">♙</span>Patient Records</a>
+<a href="index.html#registration" class="nav-link"><span class="nav-icon">＋</span>Register Patient</a>
+<a href="doctors.html" class="nav-link"><span class="nav-icon">✚</span>Doctors &amp; Departments</a>
+<a href="admissions.html" class="nav-link active"><span class="nav-icon">▤</span>Admissions &amp; Discharge</a>
+<a href="rooms.html" class="nav-link"><span class="nav-icon">▣</span>Rooms &amp; Beds</a>
+<a href="treatments-medications.html" class="nav-link"><span class="nav-icon">✚</span>Treatments &amp; Medications</a>
+<a href="billing.html" class="nav-link"><span class="nav-icon">₱</span>Services &amp; Billing</a>
+<a href="reports.html" class="nav-link"><span class="nav-icon">▤</span>Reports</a>
+<a href="staff.html" class="nav-link"><span class="nav-icon">♙</span>Staff Management</a>
 </nav><div class="sidebar-bottom"><div class="sidebar-footer"><span class="status-dot"></span>Hospital System <span class="version">v1.0</span></div></div></aside>
 <main class="main-content"><header class="topbar"><div><p class="breadcrumb">Home / <span>Admissions</span></p><h1>Admissions &amp; Discharge</h1></div><div class="topbar-right"><a class="btn btn-secondary" href="index.html">Back to Dashboard</a></div></header><div class="page-wrap">
 <div id="notice" class="notice" role="status">Loading admissions data…</div>
