@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarePoint | Staff Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>CarePoint Hospital</h1>
+        <p>Staff Management</p>
+    </header>
+
+    <main>
+        <section>
+            <h2>Add New Staff</h2>
+
+            <form id="staffForm">
+
+                <label for="full_name">Full Name</label>
+                <input
+                    type="text"
+                    id="full_name"
+                    maxlength="120"
+                    required
+                >
+
+                <label for="username">Username</label>
+                <input
+                    type="text"
+                    id="username"
+                    minlength="3"
+                    maxlength="60"
+                    required
+                >
+
+                <label for="role">Staff Role</label>
+                <select id="role" required>
+                    <option value="">Select a role</option>
+                    <option value="receptionist">Receptionist</option>
+                    <option value="doctor">Doctor</option>
+                    <option value="nurse">Nurse</option>
+                    <option value="billing">Billing Staff</option>
+                    <option value="pharmacist">Pharmacist</option>
+                    <option value="admin">Administrator</option>
+                </select>
+
+                <label for="password">Temporary Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    minlength="10"
+                    required
+                >
+
+                <button type="submit">Create Staff Account</button>
+
+            </form>
+
+            <p id="message" role="status"></p>
+        </section>
+
+        <section>
+            <h2>Staff Members</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="staffTable">
+                    <tr>
+                        <td colspan="5">Loading staff members...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <script src="auth.js"></script>
+    <script src="staff.js"></script>
+
+</body>
+</html>

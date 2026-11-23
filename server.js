@@ -440,6 +440,138 @@ app.get('/api/dashboard', asyncRoute(async (_req, res) => {
   });
 }));
 
+// ADMIN-ONLY ACCESS
+function requireAdmin(req, res, next) {
+  if (!req.user || req.user.role !== 'admin') {
+    return res.status(403).json({
+      error: 'Administrator access required.'
+    });
+  }
+
+  next();
+}
+
+ // STAFF MANAGEMENT API
+
+app.get('/api/staff', requireAdmin, asyncRoute(async (_req, res) => {
+  const [rows] = await db.execute(
+    `SELECT user_id, username, full_name, role, status, created_at
+     FROM staff_users
+     ORDER BY full_name`
+  );
+
+  res.json(rows);
+}));
+
+app.post('/api/staff', requireAdmin, asyncRoute(async (req, res) => {
+  const { username, full_name, role, password } = req.body || {};
+
+  const allowedRoles = [
+    'admin',
+    'receptionist',
+    'doctor',
+    'nurse',
+    'billing',
+    'pharmacist'
+  ];
+
+  if (
+    typeof username !== 'string' ||
+    !/^[a-zA-Z0-9._-]{3,50}$/.test(username.trim()) ||
+    typeof full_name !== 'string' ||
+    !full_name.trim() ||
+    full_name.trim().length > 120 ||
+    !allowedRoles.includes(role) ||
+    typeof password !== 'string' ||
+    password.length < 10
+  ) {
+    return res.status(400).json({
+      error: 'Enter a valid username, full name, role, and password of at least 10 characters.'
+    });
+  }
+
+  const salt = crypto.randomBytes(16);
+
+  const key = await new Promise((resolve, reject) => {
+    crypto.scrypt(password, salt, 64, (err, derivedKey) => {
+      if (err) return reject(err);
+      resolve(derivedKey);
+    });
+  });
+
+  const passwordHash =
+    `scrypt$1$${salt.toString('hex')}$${key.toString('hex')}`;
+
+  const [result] = await db.execute(
+    `INSERT INTO staff_users
+     (username, password_hash, full_name, role, status)
+     VALUES (?, ?, ?, ?, 'active')`,
+    [
+      username.trim(),
+      passwordHash,
+      full_name.trim(),
+      role
+    ]
+  );
+
+  res.status(201).json({
+    ok: true,
+    message: 'Staff account created successfully.',
+    user_id: result.insertId
+  });
+}));
+
+app.patch('/api/staff/:id', requireAdmin, asyncRoute(async (req, res) => {
+  if (!validId(req.params.id)) {
+    return res.status(400).json({
+      error: 'Invalid staff ID.'
+    });
+  }
+
+  const { status } = req.body || {};
+
+  if (!['active', 'inactive'].includes(status)) {
+    return res.status(400).json({
+      error: 'Status must be active or inactive.'
+    });
+  }
+
+  const staffId = Number(req.params.id);
+
+  if (
+    staffId === Number(req.user.user_id) &&
+    status === 'inactive'
+  ) {
+    return res.status(400).json({
+      error: 'You cannot deactivate your own account.'
+    });
+  }
+
+  const [result] = await db.execute(
+    'UPDATE staff_users SET status = ? WHERE user_id = ?',
+    [status, staffId]
+  );
+
+  if (!result.affectedRows) {
+    const [rows] = await db.execute(
+      'SELECT user_id FROM staff_users WHERE user_id = ?',
+      [staffId]
+    );
+
+    if (!rows.length) {
+      return res.status(404).json({
+        error: 'Staff member not found.'
+      });
+    }
+  }
+
+  res.json({
+    ok: true,
+    message: 'Staff status updated successfully.'
+  });
+}));
+
+
 // ERROR HANDLING
 
 app.use((err, _req, res, next) => {
