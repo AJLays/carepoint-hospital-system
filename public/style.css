@@ -1016,3 +1016,87 @@ tbody tr:last-child td {
 #courses .action-btn[data-action="delete-course"]:hover {
     background: #ffe3e6;
 }
+
+
+/* =================================
+   CAREPOINT - MINIMAL DASHBOARD POLISH
+================================= */
+
+/* Softer dashboard background */
+body {
+    background: #f7f9fc;
+    color: #1e293b;
+}
+
+/* Cleaner sidebar */
+.sidebar {
+    background: #ffffff;
+    border-right: 1px solid #edf0f5;
+}
+
+/* Navigation hover and active states */
+.nav-link {
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+    background: #f0f6ff;
+    color: #1769d2;
+}
+
+.nav-link.active {
+    background: #eaf3ff;
+    color: #1769d2;
+}
+
+/* Cleaner dashboard header */
+.topbar {
+    border-bottom: 1px solid #edf0f5;
+}
+
+/* Softer welcome banner */
+.welcome-section {
+    border-radius: 12px;
+    box-shadow: none;
+}
+
+/* Minimal summary cards */
+.summary-card {
+    border: 1px solid #edf0f5;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(20, 40, 70, 0.025);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.summary-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(20, 40, 70, 0.06);
+}
+
+/* Cleaner content panels */
+.panel {
+    border: 1px solid #edf0f5;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(20, 40, 70, 0.025);
+}
+
+/* Consistent blue buttons */
+.btn-primary {
+    background: #1769d2;
+    border-radius: 8px;
+    box-shadow: none;
+}
+
+.btn-primary:hover {
+    background: #1055b3;
+}
+
+/* Better keyboard focus visibility */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 3px solid rgba(23, 105, 210, 0.25);
+    outline-offset: 2px;
+}
