@@ -1,120 +1,115 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CarePoint | Staff Login</title>
-
-    <style>
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;background:linear-gradient(135deg,#f4f8ff 0%,#f8fafc 55%,#edf4ff 100%);font-family:"Segoe UI",Arial,sans-serif;color:#1d2939}
-.login-container{width:min(420px,100%);background:#fff;padding:38px;border:1px solid #e6edf6;border-radius:18px;box-shadow:0 18px 55px rgba(30,64,110,.09)}
-.login-mark{width:54px;height:54px;margin:0 auto 18px;border-radius:16px;background:#1769d2;color:#fff;display:grid;place-items:center;font-size:32px;font-weight:500}
-h1{margin:0 0 8px;color:#172b4d;text-align:center;font-size:25px;letter-spacing:-.7px}
-.subtitle{text-align:center;color:#7b8798;margin:0 0 28px;font-size:13px;line-height:1.6}
-label{display:block;margin:17px 0 8px;font-size:12px;font-weight:650;color:#344054}
-input{width:100%;height:46px;padding:0 13px;border:1px solid #dce4ee;border-radius:9px;font:inherit;font-size:13px;color:#1d2939;background:#fff}
-input:focus{outline:none;border-color:#6ba6ef;box-shadow:0 0 0 3px rgba(23,105,210,.1)}
-button{width:100%;margin-top:23px;min-height:46px;padding:12px;background:#1769d2;color:#fff;border:0;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;transition:background .2s}
-button:hover{background:#1055b3}
-button:disabled{opacity:.6;cursor:not-allowed}
-#msg{min-height:20px;margin-top:14px;color:#b42332;font-size:12px;text-align:center}
-.footer{text-align:center;color:#98a2b3;font-size:11px;margin-top:24px}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#123747">
+  <title>CarePoint | Staff Login</title>
+  <style>
+    *{box-sizing:border-box}
+    :root{font-family:Inter,"Segoe UI",Arial,sans-serif;color:#183344;background:#f3f7f9}
+    body{margin:0;min-height:100vh;display:grid;place-items:center;padding:28px;
+      background:radial-gradient(circle at 12% 10%,#e0f3f0 0,transparent 28%),
+      radial-gradient(circle at 90% 85%,#e3eef7 0,transparent 30%),#f4f7fa}
+    .login-shell{width:min(940px,100%);min-height:560px;display:grid;grid-template-columns:1fr 1fr;
+      overflow:hidden;border:1px solid #e4ebef;border-radius:24px;background:#fff;
+      box-shadow:0 24px 70px rgba(21,53,70,.12)}
+    .brand-panel{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;
+      padding:48px;background:linear-gradient(145deg,#123747,#176d75 65%,#1a928b);color:#fff}
+    .brand-panel:before,.brand-panel:after{content:"";position:absolute;border:1px solid rgba(255,255,255,.13);border-radius:50%}
+    .brand-panel:before{width:360px;height:360px;right:-150px;top:80px}
+    .brand-panel:after{width:250px;height:250px;right:-95px;top:135px}
+    .brand-top,.brand-copy,.brand-foot{position:relative;z-index:1}
+    .mark{width:52px;height:52px;display:grid;place-items:center;border-radius:16px;background:#28aaa1;
+      color:#fff;font-size:36px;font-weight:300;box-shadow:0 8px 22px rgba(0,0,0,.12)}
+    .brand-name{margin:17px 0 5px;font-size:27px;letter-spacing:-.8px;font-weight:750}
+    .brand-tag{margin:0;color:#b7d8d9;font-size:12px;letter-spacing:.5px}
+    .brand-copy{max-width:340px;margin:70px 0}
+    .eyebrow{font-size:10px;font-weight:750;letter-spacing:2px;color:#9ce0d8}
+    .brand-copy h2{font-size:34px;line-height:1.18;letter-spacing:-1px;margin:13px 0}
+    .brand-copy p{font-size:13px;line-height:1.8;color:#d0e6e7;margin:0}
+    .brand-foot{font-size:11px;color:#a8c9ce}
+    .form-panel{display:flex;align-items:center;justify-content:center;padding:54px 52px}
+    .form-inner{width:100%;max-width:350px}
+    .form-inner h1{font-size:27px;letter-spacing:-.8px;margin:0 0 8px;color:#19394a}
+    .intro{font-size:13px;line-height:1.6;color:#8193a1;margin:0 0 31px}
+    label{display:block;margin:18px 0 8px;font-size:12px;font-weight:700;color:#40596a}
+    input{width:100%;height:48px;padding:0 14px;border:1px solid #dce6eb;border-radius:10px;
+      font:inherit;font-size:13px;color:#203d4d;background:#fbfcfd;transition:.18s}
+    input:focus{outline:none;border-color:#36a39c;box-shadow:0 0 0 4px rgba(32,151,145,.11);background:#fff}
+    button{width:100%;min-height:49px;margin-top:25px;border:0;border-radius:10px;
+      background:#167c80;color:#fff;font-size:13px;font-weight:750;cursor:pointer;
+      box-shadow:0 7px 16px rgba(22,124,128,.17);transition:.18s}
+    button:hover{background:#116568;transform:translateY(-1px)}
+    button:disabled{opacity:.6;cursor:not-allowed;transform:none}
+    #msg{min-height:20px;margin:14px 0 0;color:#b42332;font-size:12px;text-align:center}
+    .secure-note{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:25px;
+      color:#91a0aa;font-size:11px}
+    .secure-dot{width:7px;height:7px;border-radius:50%;background:#2bb783}
+    @media(max-width:700px){body{padding:14px}.login-shell{grid-template-columns:1fr;min-height:0;border-radius:18px}
+      .brand-panel{padding:25px 27px}.brand-copy{margin:34px 0 22px}.brand-copy h2{font-size:25px}
+      .brand-copy p{max-width:420px}.brand-foot{display:none}.form-panel{padding:36px 27px 32px}}
+  </style>
 </head>
-
 <body>
-
-    <main class="login-container">
-
-        <h1>CarePoint</h1>
-        <p class="subtitle">Hospital Management System</p>
-
+  <main class="login-shell">
+    <section class="brand-panel" aria-label="CarePoint introduction">
+      <div class="brand-top">
+        <div class="mark" aria-hidden="true">+</div>
+        <div class="brand-name">CarePoint</div>
+        <p class="brand-tag">HOSPITAL MANAGEMENT SYSTEM</p>
+      </div>
+      <div class="brand-copy">
+        <p class="eyebrow">CARE THAT CONNECTS</p>
+        <h2>Better organized.<br>Better patient care.</h2>
+        <p>A centralized workspace for hospital teams to manage patient records, admissions, treatment, and billing.</p>
+      </div>
+      <div class="brand-foot">CarePoint Hospital Management System · v1.0</div>
+    </section>
+    <section class="form-panel">
+      <div class="form-inner">
+        <h1>Welcome back</h1>
+        <p class="intro">Sign in with your hospital staff account to continue.</p>
         <form id="loginForm">
-
-            <label for="username">Username</label>
-            <input
-                type="text"
-                id="username"
-                name="username"
-                autocomplete="username"
-                required
-            >
-
-            <label for="password">Password</label>
-            <input
-                type="password"
-                id="password"
-                name="password"
-                autocomplete="current-password"
-                required
-            >
-
-            <button type="submit" id="loginButton">
-                Login
-            </button>
-
-            <p id="msg" role="alert"></p>
-
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" autocomplete="username" placeholder="Enter your username" required>
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" autocomplete="current-password" placeholder="Enter your password" required>
+          <button type="submit" id="loginButton">Sign in to CarePoint</button>
+          <p id="msg" role="alert" aria-live="polite"></p>
         </form>
+        <div class="secure-note"><span class="secure-dot"></span>Secure staff access</div>
+      </div>
+    </section>
+  </main>
+  <script>
+    const loginForm = document.getElementById('loginForm');
+    const loginButton = document.getElementById('loginButton');
+    const message = document.getElementById('msg');
 
-        <div class="footer">
-            CarePoint Hospital Management System
-        </div>
-
-    </main>
-
-    <script>
-        const loginForm = document.getElementById('loginForm');
-        const loginButton = document.getElementById('loginButton');
-        const message = document.getElementById('msg');
-
-        loginForm.addEventListener('submit', async function(event) {
-            event.preventDefault();
-
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value;
-
-            message.textContent = 'Signing in...';
-            loginButton.disabled = true;
-
-            try {
-                const response = await fetch('/api/auth/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        username: username,
-                        password: password
-                    })
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(data.error || 'Invalid username or password.');
-                }
-
-                if (!data.token) {
-                    throw new Error('Login response did not contain a token.');
-                }
-
-                sessionStorage.setItem('carepoint_token', data.token);
-                sessionStorage.setItem(
-                    'carepoint_user',
-                    JSON.stringify(data.user)
-                );
-
-                window.location.replace('/index.html');
-
-            } catch (error) {
-                message.textContent = error.message;
-                loginButton.disabled = false;
-            }
+    loginForm.addEventListener('submit', async function(event) {
+      event.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      message.textContent = 'Signing in...';
+      loginButton.disabled = true;
+      try {
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username: username, password: password })
         });
-    </script>
-
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || 'Invalid username or password.');
+        if (!data.token) throw new Error('Login response did not contain a token.');
+        sessionStorage.setItem('carepoint_token', data.token);
+        sessionStorage.setItem('carepoint_user', JSON.stringify(data.user));
+        window.location.replace('/index.html');
+      } catch (error) {
+        message.textContent = error.message;
+        loginButton.disabled = false;
+      }
+    });
+  </script>
 </body>
 </html>

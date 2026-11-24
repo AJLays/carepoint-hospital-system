@@ -1,0 +1,157 @@
+
+/* CAREPOINT PAGE-BY-PAGE VISUAL SYSTEM */
+:root{
+  --cp-ink:#183747;--cp-muted:#7a8d9b;--cp-line:#e5edf1;
+  --cp-teal:#167c80;--cp-teal-dark:#116568;--cp-pale:#e8f5f3;
+  --cp-bg:#f4f7fa;--cp-shadow:0 8px 24px rgba(24,55,71,.055);
+}
+body{background:var(--cp-bg);color:var(--cp-ink);font-family:Inter,"Segoe UI",Arial,sans-serif}
+.main-content{min-width:0}
+.topbar{border-bottom:1px solid var(--cp-line)}
+.topbar h1{color:var(--cp-ink);font-weight:750;letter-spacing:-.65px}
+.breadcrumb{color:#96a5b0}
+.breadcrumb span{color:#60798a}
+.panel,.rooms-panel,.tm-card,.metric,.room-card{
+  background:#fff;border:1px solid var(--cp-line);border-radius:16px;
+  box-shadow:var(--cp-shadow)
+}
+.panel{overflow:hidden}
+.panel-heading,.panel-head{
+  background:linear-gradient(180deg,#fff,#fbfdfd);
+  border-bottom:1px solid #edf2f4
+}
+.panel-heading h2,.panel-head h2,.panel h2,.rooms-panel h2,.tm-card h2{
+  color:#1b3c4c;font-weight:700;letter-spacing:-.25px
+}
+.panel-heading p,.muted,.tm-muted,.required-note{color:var(--cp-muted)}
+.panel-body{padding:24px}
+.heading-icon,.support-icon{background:#e5f4f2;color:#167c80;border-radius:12px}
+.form-group label,.form-field label,.tm-field label,.rooms-form label,
+label{color:#40596a;font-weight:650}
+input,select,textarea,.form-group input,.form-group select,
+.form-field input,.form-field select,.form-field textarea,
+.tm-field input,.tm-field select,.tm-field textarea,
+.rooms-form input,.rooms-form select,.rooms-form textarea{
+  color:#294657;background:#fbfcfd;border:1px solid #dce6eb;border-radius:9px;
+  transition:border-color .18s,box-shadow .18s,background .18s
+}
+input:focus,select:focus,textarea:focus,.form-group input:focus,
+.form-group select:focus,.form-field input:focus,.form-field select:focus,
+.form-field textarea:focus,.tm-field input:focus,.tm-field select:focus,
+.tm-field textarea:focus,.rooms-form input:focus,.rooms-form select:focus,
+.rooms-form textarea:focus{
+  outline:0;background:#fff;border-color:#45a8a2;
+  box-shadow:0 0 0 3px rgba(22,124,128,.11)
+}
+button,.btn,.primary-btn,.tm-btn,.btn-small{
+  border-radius:9px;font-weight:650;transition:background .18s,transform .18s,box-shadow .18s
+}
+.btn-primary,.primary-btn,.tm-btn:not(.secondary),.btn-small{
+  background:#167c80;color:#fff;border-color:#167c80;
+  box-shadow:0 4px 10px rgba(22,124,128,.13)
+}
+.btn-primary:hover,.primary-btn:hover,.tm-btn:not(.secondary):hover,.btn-small:hover{
+  background:#116568;transform:translateY(-1px)
+}
+.btn-secondary,.tm-btn.secondary{
+  background:#edf5f4;color:#176f73;border:1px solid #d9eae8
+}
+.table-container,.table-wrap,.tm-table-wrap{overflow-x:auto}
+table{border-collapse:separate;border-spacing:0;background:#fff}
+thead th,th{
+  background:#f4f8f9;color:#718694;font-size:10px;font-weight:750;
+  letter-spacing:.055em;text-transform:uppercase;border-bottom:1px solid #e7eef1
+}
+td,th{border-bottom:1px solid #edf2f4}
+td{color:#496273}
+tbody tr{transition:background .15s}
+tbody tr:hover{background:#f6fbfa}
+.status-badge,.pill,.tm-pill{
+  border-radius:999px;font-weight:700
+}
+.pill.admitted,.status-badge.active{background:#e7f7ef;color:#16865c}
+.pill.discharged{background:#eaf2fa;color:#3474a6}
+.notice{border:1px solid #d8eae8;background:#edf7f6;color:#176b70;border-radius:10px}
+.notice.error,.message.error{background:#fff1f0;color:#b42332;border-color:#f3d5d2}
+.notice.success,.message.success{background:#eaf7f0;color:#16784f;border-color:#d0ecdc}
+.empty,.empty-state{color:#8799a5;padding:25px;text-align:center}
+.welcome-section{
+  background:radial-gradient(circle at 88% 15%,rgba(255,255,255,.16),transparent 26%),
+  linear-gradient(112deg,#176d75,#168f8b 60%,#20a69a);
+  border-radius:17px;box-shadow:0 12px 28px rgba(22,124,128,.13)
+}
+.welcome-section h2{color:#fff;letter-spacing:-.55px}
+.welcome-description{color:#def3f0}
+.eyebrow{color:#bce9e4;letter-spacing:1.6px}
+.welcome-symbol{color:rgba(255,255,255,.15)}
+.summary-card{border:1px solid var(--cp-line);border-radius:15px;box-shadow:0 5px 18px rgba(24,55,71,.04)}
+.summary-card h3{color:#1c394a}
+.summary-card p{color:#7a8d9b}
+.summary-icon.blue{background:#e5f3f4;color:#16858a}
+.summary-icon.green{background:#e8f7ef;color:#21966b}
+.summary-icon.purple{background:#f0edfb;color:#7866bd}
+.records-toolbar{background:#fbfdfd;border-bottom:1px solid #edf2f4}
+.search-box,.filter-box{border:1px solid #dce6eb;border-radius:9px;background:#fff}
+.page-footer{color:#91a1ac;border-top:1px solid var(--cp-line)}
+/* Admissions */
+.page-wrap{max-width:1320px}
+.page-wrap .panel{padding:22px}
+.page-wrap .panel h2{font-size:17px}
+.page-wrap .grid{gap:17px}
+.form-field textarea{min-height:42px;resize:vertical}
+.btn-small{padding:8px 12px}
+/* Doctors and staff */
+.records-heading{padding:20px 23px}
+.records-toolbar{padding:15px 22px}
+.form-grid{gap:17px}
+.form-section-title{color:#1c5660}
+.required-note{font-size:11px}
+/* Billing */
+.billing-grid{gap:20px}
+.billing-grid>.panel{padding:23px}
+.billing-grid h2{font-size:17px;margin-bottom:17px}
+.billing-grid h3,.subheading{color:#315365}
+.message{border-radius:9px}
+#billDetail{padding:24px}
+.detail-grid{margin-top:18px}
+/* Rooms */
+.rooms-wrap{max-width:1320px}
+.rooms-panels{gap:20px}
+.rooms-panel{padding:23px}
+.rooms-grid{gap:15px}
+.room-card{padding:19px}
+.beds-table{border-radius:12px;overflow:hidden}
+/* Treatments and medication */
+.tm-wrap{max-width:1380px}
+.tm-grid{gap:19px;margin:22px 0}
+.tm-card{padding:23px}
+.tm-card h2{font-size:17px}
+.tm-form{gap:15px}
+.tm-table th{background:#f4f8f9}
+.tm-top a{color:#167c80}
+/* Reports */
+.container{max-width:1360px}
+.cards{gap:16px}
+.metric{padding:21px}
+.metric span{color:#7a8d9b}
+.metric strong{color:#1b3949}
+.panel-head{padding:20px 23px}
+.bar{background:#35a8a0;border-radius:7px}
+.occupancy{background:#edf5f4;border-radius:12px}
+/* Responsive polish */
+@media(max-width:850px){
+  .panel-body{padding:19px}
+  .billing-grid{grid-template-columns:1fr}
+  .tm-grid{grid-template-columns:1fr}
+  .tm-form{grid-template-columns:1fr}
+  .tm-field.full{grid-column:auto}
+}
+@media(max-width:600px){
+  .page-wrap .panel,.billing-grid>.panel,.rooms-panel,.tm-card{padding:16px}
+  .topline{align-items:flex-start}
+  .form-actions{flex-wrap:wrap}
+  .form-actions button{flex:1}
+  .cards{grid-template-columns:1fr 1fr}
+  .table-wrap,.table-container,.tm-table-wrap{max-width:100%;overflow-x:auto}
+  table{min-width:620px}
+}
